@@ -27,3 +27,4 @@ class SpaceTest < Minitest::Test
     assert_equal true, s.guessed
   end
 end
+ 

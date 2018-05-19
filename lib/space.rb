@@ -14,3 +14,4 @@ class Space
     @guessed = true
   end
 end
+ 
