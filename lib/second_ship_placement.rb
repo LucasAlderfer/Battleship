@@ -1,4 +1,6 @@
 require './lib/board_positions.rb'
+require './lib/first_ship_placement.rb'
+require './lib/game_board.rb'
 
 class SecondShipPlacement
   include BoardPositions
