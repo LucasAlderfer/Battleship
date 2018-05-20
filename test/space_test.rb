@@ -26,5 +26,13 @@ class SpaceTest < Minitest::Test
     s.guess
     assert_equal true, s.guessed
   end
+
+  def test_it_can_be_hit
+    s = Space.new('C3')
+    assert_equal false, s.hit
+    s.fill_space
+    assert_equal false, s.hit
+    s.guess
+    assert_equal true, s.hit
+  end
 end
- 

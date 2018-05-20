@@ -6,13 +6,13 @@ class SecondShipPlacement
   include BoardPositions
   attr_reader :second_ship
 
-  def initialize(coordinate_1, coordinate_2)
-    @second_ship = [coordinate_1, coordinate_2]
+  def initialize(coordinates)
+    @second_ship = coordinates
     format_placement
   end
 
   def format_placement
-    @second_ship = @second_ship.sort.join.to_sym
+    @second_ship = @second_ship.split.sort.join.to_sym
   end
 
   def valid?
