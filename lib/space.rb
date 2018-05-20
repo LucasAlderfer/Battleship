@@ -1,5 +1,7 @@
 class Space
-  attr_reader :position, :fill, :guessed, :hit, :display
+  attr_reader :position, :fill, :guessed, :hit
+  attr_accessor :display
+  
   def initialize(position)
     @position = position
     @fill = false
