@@ -61,7 +61,7 @@ class GameBoardTest < Minitest::Test
     gb = GameBoard.new
     ss = FirstShipPlacement.new('C1 B1').first_ship
     gb.place_small_ship(ss)
-    assert_equal 12, gb.valid_three_space_positions.length
+    assert_equal 12, gb.valid_options.length
   end
 
   def test_no_overlapping_ships
@@ -103,7 +103,6 @@ class GameBoardTest < Minitest::Test
     gb.place_large_ship(ssp.second_ship)
     gb.shoot('C3')
     gb.shoot('C2')
-    gb.print_screen
     assert_equal false, gb.basic_spaces[15].fill
     assert_equal false, gb.basic_spaces[12].guessed
     assert_equal true, gb.basic_spaces[10].guessed
@@ -112,4 +111,23 @@ class GameBoardTest < Minitest::Test
     assert_equal false, gb.basic_spaces[0].guessed
     assert_equal true, gb.basic_spaces[9].hit
   end
+
+  def test_ships_can_sink
+    gb = GameBoard.new
+    fsp = FirstShipPlacement.new('A1 B1')
+    ssp = SecondShipPlacement.new('B2 D2')
+    gb.place_small_ship(fsp.first_ship)
+    gb.place_large_ship(ssp.second_ship)
+    gb.shoot('C2')
+    gb.shoot('A1')
+    assert_equal false, gb.small_sunk?
+    assert_equal false, gb.large_sunk?
+    gb.shoot('B1')
+    assert_equal true, gb.small_sunk?
+    assert_equal false, gb.large_sunk?
+    gb.shoot('B2')
+    gb.shoot('D2')
+    assert_equal true, gb.large_sunk?
+  end
+
 end

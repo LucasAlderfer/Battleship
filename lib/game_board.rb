@@ -11,7 +11,7 @@ class GameBoard
               :empty_spaces,
               :small_ship,
               :large_ship,
-              :valid_three_space_positions
+              :valid_options
 
   def initialize
     @basic_spaces = []
@@ -19,7 +19,7 @@ class GameBoard
     @guessed_spaces = []
     @small_ship = []
     @large_ship = []
-    @valid_three_space_positions = three_space_positions.clone
+    @valid_options = symbols_for_three_space_positions.clone
     make_spaces
   end
 
@@ -81,15 +81,29 @@ class GameBoard
 
   def current_three_space_positions(placement)
     options_removed_by_first_unit_choice[placement].each do |option|
-      @valid_three_space_positions.delete(option)
+      symbol = option.sort.join.to_sym
+      @valid_options.delete(symbol)
     end
-    @valid_three_space_positions
   end
 
   def no_overlap?(placement)
-    coordinates = symbols_for_three_space_positions[placement]
-    @valid_three_space_positions.include?(coordinates)
+    @valid_options.include?(placement)
   end
 
+  def small_sunk?
+    if @small_ship[0].hit && @small_ship[1].hit
+      true
+    else
+      false
+    end
+  end
+
+  def large_sunk?
+    if @large_ship[0].hit && @large_ship[1].hit && @large_ship[2].hit
+      true
+    else
+      false
+    end
+  end
 
 end

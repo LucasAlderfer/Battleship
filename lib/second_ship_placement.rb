@@ -15,8 +15,8 @@ class SecondShipPlacement
     @second_ship = @second_ship.split.sort.join.to_sym
   end
 
-  def valid?
-    symbols_for_three_space_positions.keys.include?(@second_ship)
+  def valid(valid_options)
+    valid_options.keys.include?(@second_ship)
   end
 
 end
