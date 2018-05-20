@@ -4,13 +4,13 @@ class FirstShipPlacement
   include BoardPositions
   attr_reader :first_ship
 
-  def initialize(coordinate_1, coordinate_2)
-    @first_ship = [coordinate_1, coordinate_2]
+  def initialize(coordinates)
+    @first_ship = coordinates
     format_placement
   end
 
   def format_placement
-    @first_ship = @first_ship.sort.join.to_sym
+    @first_ship = @first_ship.split.sort.join.to_sym
   end
 
   def valid?

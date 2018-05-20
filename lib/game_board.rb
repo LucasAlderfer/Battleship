@@ -30,6 +30,17 @@ class GameBoard
     @empty_spaces = @basic_spaces.clone
   end
 
+  def print_screen
+    puts "#{@basic_spaces[0].display}#{@basic_spaces[1].display}"+
+         "#{@basic_spaces[2].display}#{@basic_spaces[3].display}"
+    puts "#{@basic_spaces[4].display}#{@basic_spaces[5].display}"+
+         "#{@basic_spaces[6].display}#{@basic_spaces[7].display}"
+    puts "#{@basic_spaces[8].display}#{@basic_spaces[9].display}"+
+         "#{@basic_spaces[10].display}#{@basic_spaces[11].display}"
+    puts "#{@basic_spaces[12].display}#{@basic_spaces[13].display}"+
+         "#{@basic_spaces[14].display}#{@basic_spaces[15].display}"
+  end
+
   def shoot(space)
     target = @basic_spaces.find {|place| place.position == space}
     target.guess
@@ -48,7 +59,24 @@ class GameBoard
       @small_ship << space_object
       @empty_spaces.delete(space_object)
     end
+    fill_spaces(@small_ship)
     current_three_space_positions(placement)
+  end
+
+  def place_large_ship(placement)
+    occupied_spaces = spaces_occupied[placement]
+    occupied_spaces.each do |space|
+      space_object = @basic_spaces.find {|place| place.position == space}
+      @large_ship << space_object
+      @empty_spaces.delete(space_object)
+    end
+    fill_spaces(@large_ship)
+  end
+
+  def fill_spaces(ship)
+    ship.map do |space|
+      space.fill_space
+    end
   end
 
   def current_three_space_positions(placement)
@@ -62,4 +90,6 @@ class GameBoard
     coordinates = symbols_for_three_space_positions[placement]
     @valid_three_space_positions.include?(coordinates)
   end
+
+
 end
