@@ -3,6 +3,7 @@ require './lib/board_positions.rb'
 require 'pry'
 include BasicGameFunctions
 game = GameBoard.new
+#player_setup_1
 start_time = Time.now.to_i
 puts "Place first ship (formatted like 'A1 B1')"
 first_ship = nil
@@ -13,11 +14,13 @@ loop do
     break
   else
     puts "Please choose a valid position, the coordinates must be on the grid,"+
-      " and adjacent without wrapping the board."
+      " and adjacent without wrapping the grid (how could a ship do that?)."
   end
 end
 game.place_small_ship(first_ship.first_ship)
+puts "Your first ship has been placed!"
 game.print_screen
+#player_setup_2
 puts "Place second ship (formatted like 'A1 C1',"+
      " must be exactly 2 spaces apart, no diagonals"+
      " and cannot overlap your first ship!)"
@@ -35,6 +38,7 @@ loop do
   end
 end
 game.place_large_ship(second_ship.second_ship)
+puts 'Both of your ships have been placed!'
 game.print_screen
 computer = GameBoard.new
 two_space = computer.two_space_positions.shuffle.first.join(' ')
@@ -44,6 +48,7 @@ three_space = computer.valid_options.values.shuffle.first
 three_space = three_space.sort.join(' ')
 second = SecondShipPlacement.new(three_space)
 computer.place_large_ship(second.second_ship)
+puts 'The enemy ships are somewhere on this grid!'
 computer.print_no_ship_screen
 returns = []
 computer_returns = []
@@ -53,7 +58,10 @@ loop do
   if response != 0 && response != 1
     returns << response
     computer_returns << game.computer_shoot
+    puts '=================================================='
+    puts 'Shots taken at your ships!'
     game.print_screen
+    puts 'Shots you have taken at the enemy ships!'
     computer.print_no_ship_screen
     if returns.include?(3) && returns.include?(4)
       end_time = Time.now.to_i

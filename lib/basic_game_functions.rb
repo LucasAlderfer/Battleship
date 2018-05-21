@@ -5,17 +5,17 @@ module BasicGameFunctions
   end
 
   def print_screen
-    puts 'The Computers shots at your ships'
-    puts '  1234'
-    puts '  ===='
-    puts "A|#{@basic_spaces[0].display}#{@basic_spaces[1].display}"+
-         "#{@basic_spaces[2].display}#{@basic_spaces[3].display}"
-    puts "B|#{@basic_spaces[4].display}#{@basic_spaces[5].display}"+
-         "#{@basic_spaces[6].display}#{@basic_spaces[7].display}"
-    puts "C|#{@basic_spaces[8].display}#{@basic_spaces[9].display}"+
-         "#{@basic_spaces[10].display}#{@basic_spaces[11].display}"
-    puts "D|#{@basic_spaces[12].display}#{@basic_spaces[13].display}"+
-         "#{@basic_spaces[14].display}#{@basic_spaces[15].display}"
+    # puts 'The Computers shots at your ships'
+    puts '   1 2 3 4'
+    puts '   = = = ='
+    puts "A| #{@basic_spaces[0].display} #{@basic_spaces[1].display}"+
+         " #{@basic_spaces[2].display} #{@basic_spaces[3].display}"
+    puts "B| #{@basic_spaces[4].display} #{@basic_spaces[5].display}"+
+         " #{@basic_spaces[6].display} #{@basic_spaces[7].display}"
+    puts "C| #{@basic_spaces[8].display} #{@basic_spaces[9].display}"+
+         " #{@basic_spaces[10].display} #{@basic_spaces[11].display}"
+    puts "D| #{@basic_spaces[12].display} #{@basic_spaces[13].display}"+
+         " #{@basic_spaces[14].display} #{@basic_spaces[15].display}"
   end
 
   def print_no_ship_screen
@@ -24,17 +24,17 @@ module BasicGameFunctions
         each.display = '~'
       end
     end
-    puts 'Your shots at the computer ships'
-    puts '  1234'
-    puts '  ===='
-    puts "A|#{@basic_spaces[0].display}#{@basic_spaces[1].display}"+
-         "#{@basic_spaces[2].display}#{@basic_spaces[3].display}"
-    puts "B|#{@basic_spaces[4].display}#{@basic_spaces[5].display}"+
-         "#{@basic_spaces[6].display}#{@basic_spaces[7].display}"
-    puts "C|#{@basic_spaces[8].display}#{@basic_spaces[9].display}"+
-         "#{@basic_spaces[10].display}#{@basic_spaces[11].display}"
-    puts "D|#{@basic_spaces[12].display}#{@basic_spaces[13].display}"+
-         "#{@basic_spaces[14].display}#{@basic_spaces[15].display}"
+    # puts 'Your shots at the computer ships'
+    puts '   1 2 3 4'
+    puts '   = = = ='
+    puts "A| #{@basic_spaces[0].display} #{@basic_spaces[1].display}"+
+         " #{@basic_spaces[2].display} #{@basic_spaces[3].display}"
+    puts "B| #{@basic_spaces[4].display} #{@basic_spaces[5].display}"+
+         " #{@basic_spaces[6].display} #{@basic_spaces[7].display}"
+    puts "C| #{@basic_spaces[8].display} #{@basic_spaces[9].display}"+
+         " #{@basic_spaces[10].display} #{@basic_spaces[11].display}"
+    puts "D| #{@basic_spaces[12].display} #{@basic_spaces[13].display}"+
+         " #{@basic_spaces[14].display} #{@basic_spaces[15].display}"
   end
 
   def place_ship(occupied_spaces, ship)
