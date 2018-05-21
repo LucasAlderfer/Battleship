@@ -76,6 +76,20 @@ class GameBoardTest < Minitest::Test
     assert_equal true, gb.basic_spaces[9].hit
   end
 
+  def test_track_remaining_unguessed_spaces
+    gb = GameBoard.new
+    fsp = FirstShipPlacement.new('A1 B1')
+    ssp = SecondShipPlacement.new('B2 D2')
+    gb.place_small_ship(fsp.first_ship)
+    gb.place_large_ship(ssp.second_ship)
+    assert_equal 16, gb.remaining_unguessed_spaces.length
+    gb.shoot('A2')
+    gb.shoot('C2')
+    gb.shoot('C1')
+    gb.shoot('D4')
+    assert_equal 12, gb.remaining_unguessed_spaces.length
+  end
+
   def test_ships_can_sink
     gb = GameBoard.new
     fsp = FirstShipPlacement.new('A1 B1')

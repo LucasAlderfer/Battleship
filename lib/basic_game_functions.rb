@@ -1,7 +1,7 @@
 module BasicGameFunctions
 
   def object_at_coordinates(space)
-    @basic_spaces.find {|place| place.position == space}
+    object = @basic_spaces.find {|place| place.position == space}
   end
 
   def print_screen
@@ -79,6 +79,10 @@ module BasicGameFunctions
     puts "Your shot missed..."
   end
 
+  def not_on_grid
+    puts "Commander, that's not even on the grid! Try again!"
+  end
+
   def hit_small_ship
     if ship_sunk?(@small_ship)
       sunken_small_ship
@@ -95,5 +99,34 @@ module BasicGameFunctions
     else
       return 2
     end
+  end
+
+  def remaining_unguessed_spaces
+    @basic_spaces.find_all { |space| space.guessed == false }
+  end
+
+  def random_shot
+    remaining_unguessed_spaces.shuffle.first
+  end
+
+  def congratulations(returns, start_time, end_time)
+    time = game_time(start_time, end_time)
+    puts "Congratulations! You sank all of your opponents ships in"+
+         " #{returns.length} shots and that took #{time[0]} miuntes"+
+         " and #{time[1]} seconds!"
+  end
+
+  def sorry(computer_returns, start_time, end_time)
+    time = game_time(start_time, end_time)
+    puts "Sorry! Your opponent sank all of your ships in"+
+         " #{computer_returns.length} shots and that took #{time[0]}"+
+         " minutes and #{time[1]} seconds!"
+  end
+
+  def game_time(start_time, end_time)
+    total = end_time - start_time
+    minutes = total / 60
+    seconds = total % 60
+    [minutes, seconds]
   end
 end

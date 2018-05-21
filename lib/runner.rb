@@ -1,8 +1,9 @@
 require './lib/game_board.rb'
 require './lib/board_positions.rb'
 require 'pry'
-
+include BasicGameFunctions
 game = GameBoard.new
+start_time = Time.now.to_i
 puts "Place first ship (formatted like 'A1 B1')"
 first_ship = nil
 loop do
@@ -48,39 +49,20 @@ returns = []
 computer_returns = []
 loop do
   puts 'Commander, what the coordinates for your shot?'
-  returns << computer.shoot(gets.chomp)
-  computer_returns << game.shoot(game.spaces.shuffle.first)
-  game.print_screen
-  computer.print_no_ship_screen
-  if returns.include?(3) && returns.include?(4)
-    break
-  elsif computer_returns.include?(3) && computer_returns.include?(4)
-    break
+  response = computer.shoot(gets.chomp)
+  if response != 0 && response != 1
+    returns << response
+    computer_returns << game.computer_shoot
+    game.print_screen
+    computer.print_no_ship_screen
+    if returns.include?(3) && returns.include?(4)
+      end_time = Time.now.to_i
+      congratulations(returns, start_time, end_time)
+      break
+    elsif computer_returns.include?(3) && computer_returns.include?(4)
+      end_time = Time.now.to_i
+      sorry(computer_returns, start_time, end_time)
+      break
+    end
   end
 end
-
-
-
-# puts "Place second ship (formatted like 'A1 C1', must be exactly 2 spaces apart, no diagonals)"
-# ssp = SecondShipPlacement.new(gets.chomp)
-
-
-# def place_second_ship
-#   second_ship_position(gets.chomp)
-# end
-
-
-# def second_ship_position(input)
-#   puts "Place second ship (formatted like 'A1 C1',"+
-#        " must be exactly 2 spaces apart, no diagonals"+
-#        " and cannot overlap your first ship!)"
-#   ssp = SecondShipPlacement.new(input)
-#   unless ssp.valid(game.valid_options)
-#     puts "Please choose a valid position, the coordinates must be on the grid,"+
-#          " and in a horizontal or vertical line, without wrapping the board"+
-#          " or overlapping your first ship.  Check the map!"
-#     game.print_screen
-#     place_second_ship
-#   end
-#   ssp
-# end

@@ -29,12 +29,37 @@ class GameBoard
 
   def shoot(space)
     target = object_at_coordinates(space)
-    if target.guessed
+    if target == nil
+      not_on_grid
+      return 0
+    elsif target.guessed
       map_check
       return 1
     else
       target.guess
       check_shot(target)
+    end
+  end
+
+  def computer_shoot
+    target = random_shot
+    target.guess
+    if target.fill
+      if @small_ship.include?(target)
+        if ship_sunk?(@small_ship)
+          return 3
+        else
+          return 2
+        end
+      elsif @large_ship.include?(target)
+        if ship_sunk?(@large_ship)
+          return 4
+        else
+          return 2
+        end
+      end
+    else
+      return 5
     end
   end
 
