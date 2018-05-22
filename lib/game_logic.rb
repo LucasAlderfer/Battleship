@@ -9,6 +9,10 @@ include BasicGameFunctions
     @game = GameBoard.new
     @start_time = 0
     @computer = GameBoard.new
+    @first_ship = nil
+    @second_ship = nil
+    @returns = []
+    @computer_returns = []
   end
 
   def start_game
@@ -18,15 +22,33 @@ include BasicGameFunctions
 
   def play_read_quit(choice)
     if choice == 'p' || choice == 'P' || choice == 'play' || choice == 'Play'
-      player_setup
+      return 1
+      # player_setup
     elsif choice == 'i' || choice == 'I' || choice == 'instrcutions'
-      instrcutions
+      return 2
+      # instrcutions
     elsif choice == 'q' || choice == 'Q' || choice == 'quit' || choice == 'Quit'
+      return 3
       exit
     else
       puts "Please choose to (p)lay, read the (i)nstructions, or (q)uit!"
+      return 4
     end
   end
+
+  def operator(choice)
+    if choice == 1
+      true
+    elsif choice == 2
+      instrcutions
+    elsif choice == 3
+      exit
+    elsif choice == 4
+      puts "Please choose to (p)lay, read the (i)nstructions, or (q)uit!"
+    end
+  end
+
+
 
   def instrcutions
     puts 'Commander, we have become embroiled in a small scale skirmish!'
@@ -54,25 +76,84 @@ include BasicGameFunctions
     puts 'Now, Commander, will you lead us? Or just walk away?...'
   end
 
+  # def player_setup_1
+  #   @start_time = Time.now.to_i
+  #   puts "Place first ship (formatted like 'A1 B1')"
+    # valid_first_ship
   def player_setup_1
-    @start_time = Time.now.to_i
-    puts "Place first ship (formatted like 'A1 B1')"
-    valid_first_ship
-    @game.place_small_ship(valid_first_ship.first_ship)
+    @game.place_small_ship(@first_ship.first_ship)
     puts 'Your first ship has been placed!'
     @game.print_screen
   end
 
-  def valid_first_ship
-    first_ship = nil
-    loop do
-      fsp = FirstShipPlacement.new(gets.chomp)
-      if fsp.valid?
-        first_ship = fsp
-        break
-      else
-        puts "Please choose a valid position, the coordinates must be on the grid,"+
-          " and adjacent without wrapping the grid (how could a ship do that?)."
-      end
+  def player_setup_2
+    # valid_second_ship
+    @game.place_large_ship(@second_ship.second_ship)
+    puts 'Both of your ships have been placed!'
+    @game.print_screen
+  end
+
+  def computer_setup
+    two_space = @computer.two_space_positions.shuffle.first.join(' ')
+    first = FirstShipPlacement.new(two_space)
+    @computer.place_small_ship(first.first_ship)
+    three_space = @computer.valid_options.values.shuffle.first
+    three_space = three_space.sort.join(' ')
+    second = SecondShipPlacement.new(three_space)
+    @computer.place_large_ship(second.second_ship)
+    puts 'The enemy ships are somewhere on this grid!'
+    @computer.print_no_ship_screen
+  end
+
+  def valid_first_ship(input)
+    @start_time = Time.now.to_i
+    fsp = FirstShipPlacement.new(input)
+    if fsp.valid?
+      @first_ship = fsp
+      true
+    else
+      puts "Please choose a valid position, the coordinates must be on the grid,"+
+           " and adjacent without wrapping the grid (how could a ship do that?)."
     end
   end
+
+
+  def valid_second_ship(input)
+    ssp = SecondShipPlacement.new(input)
+    if ssp.valid(@game.valid_options)
+      @second_ship = ssp
+      true
+    else
+      puts "Please choose a valid position, the coordinates must be on the grid,"+
+           " and in a horizontal or vertical line, without wrapping the board"+
+           " or overlapping your first ship.  Check the map!"
+      @game.print_screen
+    end
+  end
+
+  def check_for_win(returns, computer_returns)
+    if returns.include?(3) && returns.include?(4)
+      end_time = Time.now.to_i
+      congratulations(returns, @start_time, end_time)
+      true
+    elsif computer_returns.include?(3) && computer_returns.include?(4)
+      end_time = Time.now.to_i
+      sorry(computer_returns, @start_time, end_time)
+      true
+    end
+  end
+
+  def shots_fired(input)
+    response = @computer.shoot(input)
+    if response != 0 && response != 1
+      @returns << response
+      @computer_returns << @game.computer_shoot
+      puts '=================================================='
+      puts 'Shots taken at your ships!'
+      @game.print_screen
+      puts 'Shots you have taken at the enemy ships!'
+      @computer.print_no_ship_screen
+      check_for_win(@returns, @computer_returns)
+    end
+  end
+end
