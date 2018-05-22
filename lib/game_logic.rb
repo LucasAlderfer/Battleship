@@ -28,7 +28,6 @@ include Text
       return 2
     elsif choice == 'q' || choice == 'Q' || choice == 'quit' || choice == 'Quit'
       return 3
-      exit
     else
       return 4
     end
