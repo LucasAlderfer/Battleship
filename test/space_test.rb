@@ -35,4 +35,16 @@ class SpaceTest < Minitest::Test
     s.guess
     assert_equal true, s.hit
   end
+
+  def test_displays_change
+    s = Space.new('C3')
+    assert_equal '~', s.display
+    s.guess
+    assert_equal '?', s.display
+    s.fill_space
+    assert_equal '^', s.display
+    s.guess
+    assert_equal '*', s.display
+  end
+
 end
