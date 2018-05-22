@@ -25,6 +25,11 @@ class GameLogicTest < Minitest::Test
   def test_operator_directs_game
     logic = GameLogic.new
     assert_equal true, logic.operator(1)
+    assert_equal 'Please choose to (p)lay, read the (i)nstructions, or (q)uit!', logic.operator(4)
+  end
+
+  def test_display_instructions
+    logic = GameLogic.new
     assert_equal "Commander, we have become embroiled in a small scale skirmish!\n\n"+
     "You must direct the two ships we have here into strategic positions!\n\n"+
     'As you can see, one of our ships will take up two of the coordinates'+
@@ -41,7 +46,54 @@ class GameLogicTest < Minitest::Test
     " notify you of the results immediately!\n\n"+
     'Our enemy will most likely fire back while we reload, we will'+
     " keep you notified of the coordinates they have fired on!\n\n"+
-    'Now, Commander, will you lead us? Or just walk away?...', logic.operator(2)
-    assert_equal 'Please choose to (p)lay, read the (i)nstructions, or (q)uit!', logic.operator(4)
+    'Now, Commander, will you lead us? Or just walk away?...', logic.instructions
+  end
+
+  def test_first_ship_placed
+    logic = GameLogic.new
+    assert_equal 'Your first ship has been placed!', logic.first_ship_placed
+  end
+
+  def test_both_ships_placed
+    logic = GameLogic.new
+    assert_equal 'Both of your ships have been placed!', logic.both_ships_placed
+  end
+
+  def test_enemy_ships_appear
+    logic = GameLogic.new
+    assert_equal 'The enemy ships are somewhere on this grid!', logic.enemy_ships_appear
+  end
+
+  def test_invalid_first_ship
+    logic = GameLogic.new
+    assert_equal 'Please choose a valid position, the coordinates must be on the grid,'+
+    ' and adjacent without wrapping the grid (how could a ship do that?).', logic.invalid_first_ship
+  end
+
+  def test_invalid_second_ship
+    logic = GameLogic.new
+    assert_equal 'Please choose a valid position, the coordinates must be on the grid,'+
+    ' and in a horizontal or vertical line, without wrapping the board'+
+    ' or overlapping your first ship.  Check the map!', logic.invalid_second_ship
+  end
+
+  def test_linebreak
+    logic = GameLogic.new
+    assert_equal '==================================================', logic.linebreak
+  end
+
+  def test_coordinates_needed
+    logic = GameLogic.new
+    assert_equal 'Commander, what are the coordinates for your shot?', logic.coordinates_needed
+  end
+
+  def test_shots_at_you
+    logic = GameLogic.new
+    assert_equal 'Shots taken at your ships!', logic.shots_at_you
+  end
+
+  def test_our_shots
+    logic = GameLogic.new
+    assert_equal 'Shots you have taken at the enemy ships!', logic.our_shots
   end
 end

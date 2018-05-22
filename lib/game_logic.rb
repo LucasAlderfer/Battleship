@@ -37,18 +37,13 @@ include Text
     if choice == 1
       true
     elsif choice == 2
-      instrcutions
+      binding.pry
+      puts instructions
     elsif choice == 3
       exit
     elsif choice == 4
       puts invalid_play_read_quit
     end
-  end
-
-
-
-  def display_instrcutions
-    puts instructions
   end
 
   def player_setup_1
