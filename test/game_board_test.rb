@@ -13,6 +13,12 @@ class GameBoardTest < Minitest::Test
     assert_equal 16, gb.basic_spaces.length
   end
 
+  def test_the_basic_spaces_have_values
+    gb = GameBoard.new
+    assert_equal 'A1', gb.basic_spaces[0].position
+    assert_equal 'D2', gb.basic_spaces[13].position
+  end
+
   def test_shots_can_be_taken
     gb = GameBoard.new
     gb.shoot('C3')
