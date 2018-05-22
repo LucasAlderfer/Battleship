@@ -1,9 +1,11 @@
 require './lib/game_board.rb'
 require './lib/board_positions.rb'
+require './lib/text.rb'
 require 'pry'
 
 class GameLogic
 include BasicGameFunctions
+include Text
 
   def initialize
     @game = GameBoard.new
@@ -15,23 +17,19 @@ include BasicGameFunctions
     @computer_returns = []
   end
 
-  def start_game
-    puts 'Welcome to Battleship! Command your small fleet to victory!'
-    puts 'Would you like to (p)lay, read the (i)nstrcutions, or (q)uit?'
+  def start
+    puts start_game
   end
 
   def play_read_quit(choice)
     if choice == 'p' || choice == 'P' || choice == 'play' || choice == 'Play'
       return 1
-      # player_setup
     elsif choice == 'i' || choice == 'I' || choice == 'instrcutions'
       return 2
-      # instrcutions
     elsif choice == 'q' || choice == 'Q' || choice == 'quit' || choice == 'Quit'
       return 3
       exit
     else
-      puts "Please choose to (p)lay, read the (i)nstructions, or (q)uit!"
       return 4
     end
   end
@@ -44,52 +42,25 @@ include BasicGameFunctions
     elsif choice == 3
       exit
     elsif choice == 4
-      puts "Please choose to (p)lay, read the (i)nstructions, or (q)uit!"
+      puts invalid_play_read_quit
     end
   end
 
 
 
-  def instrcutions
-    puts 'Commander, we have become embroiled in a small scale skirmish!'
-    puts ' '
-    puts 'You must direct the two ships we have here into strategic positions!'
-    puts 'As you can see, one of our ships will take up two of the coordinates'+
-         ' on the grid, and the other will take up three coordinates.'
-    puts ' '
-    puts 'We rely on you to give us the adjacent coordinates for the small'+
-         ' ship and the first and last coordinates for the large ship.'
-    puts ' '
-    puts 'Remember, for maximum accuracy, our ships must be vertical'+
-         ' or horizontal on the grid!'
-    puts ' '
-    puts 'Our enemy will be following the same logic when positioning their'+
-         ' ships, which are the same sizes as ours.'
-    puts ' '
-    puts 'Commander, we need you to direct our fire at the grid to sink the'+
-         ' enemy ships before we are sunk ourselves!'
-    puts 'Choose one coordinate on the grid at a time to fire at and we will'+
-         ' notify you of the results immediately!'
-    puts 'Our enemy will most likely fire back while we reload, we will'+
-         ' keep you notified of the coordinates they have fired on!'
-    puts ' '
-    puts 'Now, Commander, will you lead us? Or just walk away?...'
+  def display_instrcutions
+    puts instructions
   end
 
-  # def player_setup_1
-  #   @start_time = Time.now.to_i
-  #   puts "Place first ship (formatted like 'A1 B1')"
-    # valid_first_ship
   def player_setup_1
     @game.place_small_ship(@first_ship.first_ship)
-    puts 'Your first ship has been placed!'
+    puts first_ship_placed
     @game.print_screen
   end
 
   def player_setup_2
-    # valid_second_ship
     @game.place_large_ship(@second_ship.second_ship)
-    puts 'Both of your ships have been placed!'
+    puts both_ships_placed
     @game.print_screen
   end
 
@@ -99,9 +70,10 @@ include BasicGameFunctions
     @computer.place_small_ship(first.first_ship)
     three_space = @computer.valid_options.values.shuffle.first
     three_space = three_space.sort.join(' ')
+    #maybe pass three_space to split this up
     second = SecondShipPlacement.new(three_space)
     @computer.place_large_ship(second.second_ship)
-    puts 'The enemy ships are somewhere on this grid!'
+    puts enemy_ships_appear
     @computer.print_no_ship_screen
   end
 
@@ -112,8 +84,7 @@ include BasicGameFunctions
       @first_ship = fsp
       true
     else
-      puts "Please choose a valid position, the coordinates must be on the grid,"+
-           " and adjacent without wrapping the grid (how could a ship do that?)."
+      puts invalid_first_ship
     end
   end
 
@@ -124,9 +95,7 @@ include BasicGameFunctions
       @second_ship = ssp
       true
     else
-      puts "Please choose a valid position, the coordinates must be on the grid,"+
-           " and in a horizontal or vertical line, without wrapping the board"+
-           " or overlapping your first ship.  Check the map!"
+      puts invalid_second_ship
       @game.print_screen
     end
   end
@@ -148,10 +117,10 @@ include BasicGameFunctions
     if response != 0 && response != 1
       @returns << response
       @computer_returns << @game.computer_shoot
-      puts '=================================================='
-      puts 'Shots taken at your ships!'
+      puts linebreak
+      puts shots_at_you
       @game.print_screen
-      puts 'Shots you have taken at the enemy ships!'
+      puts our_shots
       @computer.print_no_ship_screen
       check_for_win(@returns, @computer_returns)
     end

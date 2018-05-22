@@ -1,7 +1,7 @@
 module BasicGameFunctions
 
   def object_at_coordinates(space)
-    object = @basic_spaces.find {|place| place.position == space}
+    @basic_spaces.find {|place| place.position == space}
   end
 
   def print_screen
