@@ -78,3 +78,4 @@ module Text
   def our_shots
     'Shots you have taken at the enemy ships!'
   end
+end
