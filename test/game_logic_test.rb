@@ -22,12 +22,6 @@ class GameLogicTest < Minitest::Test
     assert_equal 4, logic.play_read_quit('gfcvghf')
   end
 
-  def test_operator_directs_game
-    logic = GameLogic.new
-    assert_equal true, logic.operator(1)
-    assert_equal 'Please choose to (p)lay, read the (i)nstructions, or (q)uit!', logic.operator(4)
-  end
-
   def test_display_instructions
     logic = GameLogic.new
     assert_equal "Commander, we have become embroiled in a small scale skirmish!\n\n"+
