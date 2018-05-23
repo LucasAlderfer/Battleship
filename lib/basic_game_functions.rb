@@ -85,7 +85,6 @@ module BasicGameFunctions
 
   def hit_small_ship
     if ship_sunk?(@small_ship)
-      sunken_small_ship
       return 3
     else
       return 2
@@ -94,7 +93,6 @@ module BasicGameFunctions
 
   def hit_large_ship
     if ship_sunk?(@large_ship)
-      sunken_large_ship
       return 4
     else
       return 2

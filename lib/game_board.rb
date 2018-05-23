@@ -46,17 +46,9 @@ class GameBoard
     target.guess
     if target.fill
       if @small_ship.include?(target)
-        if ship_sunk?(@small_ship)
-          return 3
-        else
-          return 2
-        end
+        hit_small_ship
       elsif @large_ship.include?(target)
-        if ship_sunk?(@large_ship)
-          return 4
-        else
-          return 2
-        end
+        hit_large_ship
       end
     else
       return 5

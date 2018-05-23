@@ -78,4 +78,28 @@ module Text
   def our_shots
     'Shots you have taken at the enemy ships!'
   end
+
+  def map_check
+    'Commander, we have already taken that shot, check the map!'
+  end
+
+  def sunken_small_ship
+    'You sunk the small ship!'
+  end
+
+  def sunken_large_ship
+    'You sunk the large ship!'
+  end
+
+  def got_a_hit
+    'You hit something!'
+  end
+
+  def miss
+    'Your shot missed...'
+  end
+
+  def not_on_grid
+    'Commander, that is not even on the grid! Try again!'
+  end
 end

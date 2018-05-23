@@ -109,6 +109,11 @@ include Text
   def shots_fired(input)
     response = @computer.shoot(input)
     if response != 0 && response != 1
+      if response == 3
+        puts sunken_small_ship
+      elsif response == 4
+        puts sunken_large_ship
+      end
       @returns << response
       @computer_returns << @game.computer_shoot
       puts linebreak
