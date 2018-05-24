@@ -1,8 +1,11 @@
 module Text
 
   def start_game
-    'Welcome to Battleship! Command your small fleet to victory!'+
-    "\nWould you like to (p)lay, read the (i)nstrcutions, or (q)uit?"
+    'Welcome to Battleship! Command your small fleet to victory!'
+  end
+
+  def p_i_q
+    'Would you like to (p)lay, read the (i)nstrcutions, or (q)uit?'
   end
 
   def place_first_ship
@@ -101,5 +104,18 @@ module Text
 
   def not_on_grid
     'Commander, that is not even on the grid! Try again!'
+  end
+
+  def play_again
+    'Commander, there are more zones of conflict, will you continue to fight?'+
+    ' (play or quit)'
+  end
+
+  def end_turn
+    'Commander, please confirm these are all your orders!'
+  end
+
+  def just_confirm
+    'We really just need to move on, stop giving commands!'
   end
 end

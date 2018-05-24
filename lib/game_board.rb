@@ -3,11 +3,13 @@ require './lib/first_ship_placement.rb'
 require './lib/second_ship_placement.rb'
 require './lib/space.rb'
 require './lib/basic_game_functions.rb'
+require './lib/text.rb'
 require 'pry'
 
 class GameBoard
   include BoardPositions
   include BasicGameFunctions
+  include Text
   attr_reader :basic_spaces,
               :small_ship,
               :large_ship,
@@ -30,10 +32,10 @@ class GameBoard
   def shoot(space)
     target = object_at_coordinates(space)
     if target == nil
-      not_on_grid
+      puts not_on_grid
       return 0
     elsif target.guessed
-      map_check
+      puts map_check
       return 1
     else
       target.guess
@@ -56,15 +58,17 @@ class GameBoard
   end
 
   def check_shot(target)
+    puts `clear`
+    puts "Shooting at #{target.position} now!"
     if target.fill
-      got_a_hit
+      puts got_a_hit
       if @small_ship.include?(target)
         hit_small_ship
       elsif @large_ship.include?(target)
         hit_large_ship
       end
     else
-      miss
+      puts miss
       return 5
     end
   end
