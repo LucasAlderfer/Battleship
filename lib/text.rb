@@ -107,8 +107,8 @@ module Text
   end
 
   def play_again
-    'Commander, there are more zones of conflict, will you continue to fight?'+
-    ' (play or quit)'
+    'Commander, there are more zones of conflict, will you continue to fight?'\
+      ' (play or quit)'
   end
 
   def end_turn

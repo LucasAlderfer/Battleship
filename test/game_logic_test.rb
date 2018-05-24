@@ -10,8 +10,7 @@ class GameLogicTest < Minitest::Test
 
   def test_it_starts
     logic = GameLogic.new
-    assert_equal 'Welcome to Battleship! Command your small fleet to victory!'+
-    "\nWould you like to (p)lay, read the (i)nstrcutions, or (q)uit?", logic.start_game
+    assert_equal 'Welcome to Battleship! Command your small fleet to victory!', logic.start_game
   end
 
   def test_play_read_quit

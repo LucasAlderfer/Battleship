@@ -122,9 +122,7 @@ include Text
   end
 
   def confirm_turn(input)
-    if input != ""
-      puts just_confirm
-    end
+    puts just_confirm if input != ''
   end
 
 end
