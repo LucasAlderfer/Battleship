@@ -17,10 +17,6 @@ include Text
     @computer_returns = []
   end
 
-  def start
-    puts start_game
-  end
-
   def play_read_quit(choice)
     if choice == 'p' || choice == 'P' || choice == 'play' || choice == 'Play'
       return 1
@@ -37,7 +33,6 @@ include Text
     if choice == 1
       true
     elsif choice == 2
-      binding.pry
       puts instructions
     elsif choice == 3
       exit
@@ -82,7 +77,6 @@ include Text
     end
   end
 
-
   def valid_second_ship(input)
     ssp = SecondShipPlacement.new(input)
     if ssp.valid(@game.valid_options)
@@ -122,6 +116,15 @@ include Text
       puts our_shots
       @computer.print_no_ship_screen
       check_for_win(@returns, @computer_returns)
+    else
+      0
     end
   end
+
+  def confirm_turn(input)
+    if input != ""
+      puts just_confirm
+    end
+  end
+
 end
